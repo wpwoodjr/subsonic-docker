@@ -1,0 +1,4 @@
+#!/bin/bash
+docker exec subsonic /etc/init.d/subsonic stop
+docker container stop -t 2 subsonic
+docker container rm subsonic

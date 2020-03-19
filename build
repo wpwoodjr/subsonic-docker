@@ -1,0 +1,6 @@
+#!/bin/bash
+docker build -t subsonic . \
+  --build-arg LOCALE="en_US.UTF-8" \
+  --build-arg TZ="America/New_York" \
+  --build-arg SUBSONIC_USER="subsonic" \
+  --build-arg SUBSONIC_ARGS=""

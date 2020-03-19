@@ -1,0 +1,21 @@
+#!/bin/bash
+rootdir=~/subsonic-docker
+
+music="$rootdir"/music
+playlists="$rootdir"/playlists
+podcasts="$rootdir"/podcasts
+config="$rootdir"/config
+port=14545
+
+docker run -d \
+  --name subsonic \
+  --restart always \
+  -v $music:/var/music \
+  -v $playlists:/var/playlists \
+  -v $podcasts:/var/music/Podcast \
+  -v $config:/var/subsonic \
+  -p $port:4040 \
+  subsonic
+sleep 2
+
+docker exec subsonic /etc/init.d/subsonic start
