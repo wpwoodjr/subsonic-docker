@@ -5,7 +5,7 @@
 set -e
 if [ "$1" = "stop" ]
 then
-  /etc/init.d/subsonic stop
+  service stop subsonic
   exit
 fi
 
@@ -62,7 +62,7 @@ sed -i -e "s^SUBSONIC_ARGS=\"\(.*\)\"^SUBSONIC_ARGS=\"\1 $SUBSONIC_ARGS\"^g" \
   /etc/default/subsonic
 
 echo -e "\nstarting Subsonic with args $SUBSONIC_ARGS"
-/etc/init.d/subsonic start
+service start subsonic
 ps -ax | grep '[j]ava'
 
 # don't exit otherwise container will stop
