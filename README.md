@@ -62,7 +62,6 @@ Directory containing your music files.
 Defaults to `music` in `subsonic_dir`.  You can change `music` to point directly to your music directory, or alternatively you can create a symbolic link in `subsonic_dir` from `music` to your music directory:
 ```
 ln -s /your-music/ music
-
 ```
 If you don't change `music`, a new directory called `music` will be created in `subsonic_dir`.
 
@@ -72,7 +71,6 @@ Directory containing your playlist files.
 Defaults to `playlists` in `subsonic_dir`.  You can change `playlists` to point directly to your playlists directory, or alternatively you can create a symbolic link in `subsonic_dir` from `playlists` to your playlists directory:
 ```
 ln -s /your-playlists/ playlists
-
 ```
 If you don't change `playlists`, a new directory called `playlists` will be created in `subsonic_dir`.
 
@@ -82,7 +80,6 @@ Directory containing your podcasts.
 Defaults to `podcasts` in `subsonic_dir`.  You can change `podcasts` to point directly to your podcasts directory, or alternatively you can create a symbolic link in `subsonic_dir` from `podcasts` to your podcasts directory:
 ```
 ln -s /your-podcasts/ podcasts
-
 ```
 If you don't change `podcasts`, a new directory called `podcasts` will be created in `subsonic_dir`.
 
@@ -92,7 +89,6 @@ This is where Subsonic maintains its database and configuration.
 Defaults to `data` in `subsonic_dir`.  You can change `data` to point directly to your Subsonic data directory, or alternatively you can create a symbolic link in `subsonic_dir` from `data` to your Subsonic data directory:
 ```
 ln -s /your-subsonic-data/ data
-
 ```
 If you don't change `data`, a new directory called `data` will be created in `subsonic_dir`.
 
