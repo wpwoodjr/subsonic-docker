@@ -27,7 +27,7 @@ docker run -d \
   --env TZ="$tz" \
   --env SUBSONIC_USER="$user" \
   --env UID="$uid" \
-  --env SUBSONIC_ARGS="$args --port=$port --max-memory=$mem" \
+  --env SUBSONIC_ARGS="$args --port=$port --https-port=$https_port --context-path=$context_path --max-memory=$mem" \
   subsonic ./run start
 
 sleep 5

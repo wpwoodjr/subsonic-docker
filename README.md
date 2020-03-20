@@ -12,8 +12,43 @@ If you don't have Docker, install it per your OS instructions, then run:
 ```
 This will build the Subsonic container, based on Subsonic 6.1.6.
 
+### `start`
+After configuring settings (see `conf` section below), run:
+```
+./start
+```
+to start Subsonic.  You will see some log output similar to:
+```
+$ ./start
+039bc7477e2acb84bbbe5eb048bc24250c4c545102582e1ac47f74d93a802198
+
+initializing container
+setting locale to en_US.UTF-8
+Generating locales (this might take a while)...
+  en_US.UTF-8... done
+Generation complete.
+setting timezone to America/New_York
+creating user subsonic with uid 1000
+
+getting host ip
+
+starting Subsonic with args  --port=14545 --https-port=0 --context-path=/subsonic --max-memory=250 --host=10.0.1.29
+Started Subsonic [PID 59, /var/subsonic/subsonic_sh.log]
+   59 ?        R      0:00 java -Xmx250m -Dsubsonic.home=/var/subsonic -Dsubsonic.host=10.0.1.29 -Dsubsonic.port=14545 -Dsubsonic.httpsPort=0 -Dsubsonic.contextPath=/subsonic -Dsubsonic.db= -Dsubsonic.defaultMusicFolder=/var/music -Dsubsonic.defaultPodcastFolder=/var/music/Podcast -Dsubsonic.defaultPlaylistFolder=/var/playlists -Djava.awt.headless=true -verbose:gc -jar subsonic-booter-jar-with-dependencies.jar
+```
+In the log output note the `--host=<ip>`, `--port=<port>`, and `--context-path=<path>` settings and browse to `<ip>:<port><context-path>`.
+
+Subsonic should be up and running!  It will automatically restart when the system reboots.
+
+### `stop`
+To stop Subsonic, run:
+```
+./stop
+```
+If you stop Subsonic, it will not restart again until you restart it with `./start` as above.
+
 ### `conf`
-The `conf` file is where you customize your installation as required. `conf` contains the following configurable option variables:
+The `conf` file is where you customize your installation as required. `conf` contains the following configurable settings:
 
 #### `subsonic_dir`
 Directory where you downloaded this repo.  You should not need to change this unless the auto-detect fails for some reason.
@@ -66,11 +101,15 @@ The port on which Subsonic will listen for incoming HTTP traffic.  Subsonic's de
 `port` should be greater than `1024`.
 
 #### `https_port`
-Not supported at this time.
+The port on which Subsonic will listen for incoming HTTPS traffic. Default is 0 (disabled).
+`https_port` should be greater than `1024`.
 
 #### `hostip`
 Sonos requires that the container use the host's ip address, not a container ip address.
 By default `hostip` is blank, which tells the container to discover the ip address of the host.  If it fails for some reason, then if your host ip is fixed, set `hostip` to that ip address. Otherwise, just set hostip to `0.0.0.0`.
+
+#### `context_path`
+The context path, i.e., the last part of the Subsonic URL. Typically "/" or "/subsonic". Default is "/".
 
 #### `locale`
 Default locale is `en_US.UTF-8`.
@@ -89,9 +128,9 @@ Set `uid` to your uid to grant user `subsonic` write permissions in the music di
 If problems persist, you can try changing `user` to `root`, although from a security perspective it is better to run as a non-root user.
 
 #### `args`
-Defaults to blank.
+Defaults to blank (no args).
 You probably won't need to add any args, as most are configured already above.
-For reference here is the Subsonic options help:
+For reference here is the list of Subsonic arguments:
 ```
 Usage: subsonic.sh [options]
   --help               This small usage guide.

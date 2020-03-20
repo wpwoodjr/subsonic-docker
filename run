@@ -1,5 +1,5 @@
 #!/bin/bash
-# this script is run by the Docker container
+# this script is run inside the Docker container
 # you should not need to run it
 
 set -e
