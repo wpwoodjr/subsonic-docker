@@ -36,7 +36,7 @@ starting Subsonic with args  --port=14545 --https-port=0 --context-path=/subsoni
 Started Subsonic [PID 59, /var/subsonic/subsonic_sh.log]
    59 ?        R      0:00 java -Xmx250m -Dsubsonic.home=/var/subsonic -Dsubsonic.host=10.0.1.29 -Dsubsonic.port=14545 -Dsubsonic.httpsPort=0 -Dsubsonic.contextPath=/subsonic -Dsubsonic.db= -Dsubsonic.defaultMusicFolder=/var/music -Dsubsonic.defaultPodcastFolder=/var/music/Podcast -Dsubsonic.defaultPlaylistFolder=/var/playlists -Djava.awt.headless=true -verbose:gc -jar subsonic-booter-jar-with-dependencies.jar
 ```
-In the log output note the `--host=<ip>`, `--port=<port>`, and `--context-path=<path>` settings and browse to `<ip>:<port><context-path>`.
+In the log output note the `--host=<ip>`, `--port=<port>`, and `--context-path=<path>` settings and browse to `<ip>:<port><context-path>`. For example, browse to `10.0.1.15:4040/`
 
 Subsonic should be up and running!  It will automatically restart when the system reboots.
 
