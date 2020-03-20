@@ -1,11 +1,11 @@
 #!/bin/bash
-rootdir=~/subsonic-docker
+# first run ./build to build the Subsonic Docker container
+# then configure Subsonic by editing ./conf
+# then run ./start to start Subsonic (this file)
+# run ./stop to stop Subsonic
 
-music="$rootdir"/music
-playlists="$rootdir"/playlists
-podcasts="$rootdir"/podcasts
-config="$rootdir"/config
-port=14545
+set -e
+source ./conf
 
 docker run -d \
   --name subsonic \
@@ -14,8 +14,15 @@ docker run -d \
   -v $playlists:/var/playlists \
   -v $podcasts:/var/music/Podcast \
   -v $config:/var/subsonic \
-  -p $port:4040 \
-  subsonic
-sleep 2
+  --network host \
+  --env PORT="$port" \
+  --env HOSTIP="$hostip" \
+  --env LOCALE="$locale" \
+  --env TZ="$tz" \
+  --env SUBSONIC_USER="$user" \
+  --env UID="$uid" \
+  --env SUBSONIC_ARGS="$args --port=$port --max-memory=$mem" \
+  subsonic ./run start
 
-docker exec subsonic /etc/init.d/subsonic start
+sleep 5
+docker logs subsonic

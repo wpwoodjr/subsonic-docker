@@ -1,28 +1,14 @@
-# subsonic-docker
-Easy to run Subsonic in Docker with flexible configuration.
+#!/bin/bash
+# first run ./build to build the Subsonic Docker container
+# then configure Subsonic by editing ./conf (this file)
+# then run ./start to start Subsonic
+# run ./stop to stop Subsonic
 
-## Getting started
+# check dirs... playlists etc
+# bind /var/playlists to /mnt/01CE739A5B572A40/Users/Public/Music/WPW/Playlists
 
-After cloning or downloading this repository, `cd` to it and follow the instructions below.
-
-### `build`
-If you don't have Docker, install it per your OS instructions, then run:
-```
-./build
-```
-This will build the Subsonic container, based on Subsonic 6.1.6.
-
-### `conf`
-The `conf` file is where you customize your installation, if required. `conf` contains the following configurable options:
-
-#### `subsonic_dir`
-Directory where you downloaded this repo.  You should not need to change this.
-
-#### `music`
-Defaults to `music` in `subsonic_dir`.
-
+subsonic_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 music="$subsonic_dir"/music
-
 playlists="$subsonic_dir"/playlists
 podcasts="$subsonic_dir"/podcasts
 config="$subsonic_dir"/subsonic-config

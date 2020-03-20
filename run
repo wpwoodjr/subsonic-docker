@@ -1,0 +1,65 @@
+#!/bin/bash
+# this script is run by the Docker container
+# you should not need to run it
+
+set -e
+if [ "$1" = "stop" ]
+then
+  /etc/init.d/subsonic stop
+  exit
+fi
+
+if [ "$1" != "start" ]
+then
+  echo "do not run this outside of the container!"
+  exit 1
+fi
+
+if [ ! -f init-complete ]
+then
+  touch init-complete
+
+  echo -e "\ninitializing container"
+  echo "setting locale to $LOCALE"
+  locale-gen "$LOCALE"
+  update-locale LANG="$LOCALE"
+
+  echo "setting timezone to $TZ"
+  unlink /etc/localtime
+  ln -s /usr/share/zoneinfo/"$TZ" /etc/localtime
+
+  echo "setting Subsonic user to $SUBSONIC_USER with uid $UID"
+  useradd -u $UID -U $SUBSONIC_USER
+  sed -i -e "s^SUBSONIC_USER=.*^SUBSONIC_USER=$SUBSONIC_USER^g" \
+    /etc/default/subsonic
+
+  if [ "$(ls -A /var/subsonic)" = "" ]
+  then
+    echo -e "\ninitializing /var/subsonic"
+    cp -a subsonic/. /var/subsonic/
+    ls -lat /var/subsonic
+  fi
+  rm -r subsonic
+fi
+
+if [ "$HOSTIP" = "" ]
+then
+  echo -e "\ngetting host ip"
+  #HOSTIP=$(hostname -I|awk '{ print $1 }')
+  # https://unix.stackexchange.com/a/402160/338467
+  HOSTIP=$(ip route get 8.8.8.8 || echo "0.0.0.0")
+  [ "$HOSTIP" = "0.0.0.0" ] || \
+    HOSTIP=$(awk <<<$HOSTIP '{gsub(".*src",""); print $1; exit}')
+  [ "$HOSTIP" = "0.0.0.0" ] && echo "failed to get host ip - Sonos may not work"
+fi
+
+SUBSONIC_ARGS="$SUBSONIC_ARGS --host=$HOSTIP"
+sed -i -e "s^SUBSONIC_ARGS=\"\(.*\)\"^SUBSONIC_ARGS=\"\1 $SUBSONIC_ARGS\"^g" \
+  /etc/default/subsonic
+
+echo -e "\nstarting Subsonic with args $SUBSONIC_ARGS"
+/etc/init.d/subsonic start
+ps -ax | grep '[j]ava'
+
+# don't exit otherwise container will stop
+tail -f /dev/null
