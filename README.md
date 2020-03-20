@@ -106,7 +106,7 @@ The port on which Subsonic will listen for incoming HTTPS traffic. Default is 0 
 
 #### `hostip`
 Sonos requires that the container use the host's ip address, not a container ip address.
-By default `hostip` is blank, which tells the container to discover the ip address of the host.  If it fails for some reason, then if your host ip is fixed, set `hostip` to that ip address. Otherwise, just set hostip to `0.0.0.0`.
+By default `hostip` is blank, which tells the container to figure out the ip address of the host.  If it fails for some reason, then if your host ip is fixed, set `hostip` to that ip address. Otherwise, set hostip to `0.0.0.0` (Sonos may not work with Subsonic in this case).
 
 #### `context_path`
 The context path, i.e., the last part of the Subsonic URL. Typically "/" or "/subsonic". Default is "/".

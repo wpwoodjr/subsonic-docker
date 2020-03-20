@@ -4,9 +4,6 @@
 # then run ./start to start Subsonic
 # run ./stop to stop Subsonic
 
-# check dirs... playlists etc
-# bind /var/playlists to /mnt/01CE739A5B572A40/Users/Public/Music/WPW/Playlists
-
 # see README.md before changing settings below
 
 subsonic_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
@@ -27,29 +24,3 @@ user="subsonic"
 uid="1000"
 
 args=""
-# $ /usr/bin/subsonic --help
-# Usage: subsonic.sh [options]
-#   --help               This small usage guide.
-#   --home=DIR           The directory where Subsonic will create files.
-#                        Make sure it is writable. Default: /var/subsonic
-#   --host=HOST          The host name or IP address on which to bind Subsonic.
-#                        Only relevant if you have multiple network interfaces and want
-#                        to make Subsonic available on only one of them. The default value
-#                        will bind Subsonic to all available network interfaces. Default: 0.0.0.0
-#   --port=PORT          The port on which Subsonic will listen for
-#                        incoming HTTP traffic. Default: 4040
-#   --https-port=PORT    The port on which Subsonic will listen for
-#                        incoming HTTPS traffic. Default: 0 (disabled)
-#   --context-path=PATH  The context path, i.e., the last part of the Subsonic
-#                        URL. Typically '/' or '/subsonic'. Default '/'
-#   --db=JDBC_URL        Use alternate database. MySQL, PostgreSQL and MariaDB are currently supported.
-#   --max-memory=MB      The memory limit (max Java heap size) in megabytes.
-#                        Default: 100
-#   --pidfile=PIDFILE    Write PID to this file. Default not created.
-#   --quiet              Don't print anything to standard out. Default false.
-#   --default-music-folder=DIR    Configure Subsonic to use this folder for music.  This option 
-#                                 only has effect the first time Subsonic is started. Default '/var/music'
-#   --default-podcast-folder=DIR  Configure Subsonic to use this folder for Podcasts.  This option 
-#                                 only has effect the first time Subsonic is started. Default '/var/music/Podcast'
-#   --default-playlist-folder=DIR Configure Subsonic to use this folder for playlist imports.  This option 
-#                                 only has effect the first time Subsonic is started. Default '/var/playlists'
