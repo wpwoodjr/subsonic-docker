@@ -28,15 +28,19 @@ then
   unlink /etc/localtime
   ln -s /usr/share/zoneinfo/"$TZ" /etc/localtime
 
-  echo "setting Subsonic user to $SUBSONIC_USER with uid $UID"
-  useradd -u $UID -U $SUBSONIC_USER
-  sed -i -e "s^SUBSONIC_USER=.*^SUBSONIC_USER=$SUBSONIC_USER^g" \
-    /etc/default/subsonic
+  if [ "$SUBSONIC_USER" != "root" ]
+  then
+    echo "creating user $SUBSONIC_USER with uid $UID"
+    useradd -u $UID -U $SUBSONIC_USER
+    sed -i -e "s^SUBSONIC_USER=.*^SUBSONIC_USER=$SUBSONIC_USER^g" \
+      /etc/default/subsonic
+  fi
 
   if [ "$(ls -A /var/subsonic)" = "" ]
   then
     echo -e "\ninitializing /var/subsonic"
     cp -a subsonic/. /var/subsonic/
+    chown -R "$SUBSONIC_USER:" /var/subsonic
     ls -lat /var/subsonic
   fi
   rm -r subsonic

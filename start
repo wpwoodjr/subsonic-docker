@@ -6,6 +6,12 @@
 
 set -e
 source ./conf
+[ -f "./myconf" ] && source ./myconf
+
+[ -d "$music" ] || mkdir "$music"
+[ -d "$playlists" ] || mkdir "$playlists"
+[ -d "$podcasts" ] || mkdir "$podcasts"
+[ -d "$data" ] || mkdir "$data"
 
 docker run -d \
   --name subsonic \
@@ -13,7 +19,7 @@ docker run -d \
   -v $music:/var/music \
   -v $playlists:/var/playlists \
   -v $podcasts:/var/music/Podcast \
-  -v $config:/var/subsonic \
+  -v $data:/var/subsonic \
   --network host \
   --env PORT="$port" \
   --env HOSTIP="$hostip" \

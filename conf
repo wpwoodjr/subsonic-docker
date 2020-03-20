@@ -1,6 +1,6 @@
 #!/bin/bash
 # first run ./build to build the Subsonic Docker container
-# then configure Subsonic by editing ./conf (this file)
+# then configure Subsonic by editing ./conf (this file) - see README.md for help
 # then run ./start to start Subsonic
 # run ./stop to stop Subsonic
 
@@ -11,26 +11,20 @@ subsonic_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 music="$subsonic_dir"/music
 playlists="$subsonic_dir"/playlists
 podcasts="$subsonic_dir"/podcasts
-config="$subsonic_dir"/subsonic-config
+data="$subsonic_dir"/data
 
 mem="250"
-port=14545
+port=4040
 #https_port=0
-
-# Sonos requires container to use host ip address
-# if you don't use Sonos, just set hostip to 0.0.0.0
-# else if your host ip is fixed, set it here
-# else set it to blank and the docker container will figure it out
+# see README.md before changing hostip
 hostip=""
-
-# see below for description of other args you could add
-args=""
 
 locale="en_US.UTF-8"
 tz="America/New_York"
 user="subsonic"
 uid="1000"
 
+args=""
 # $ /usr/bin/subsonic --help
 # Usage: subsonic.sh [options]
 #   --help               This small usage guide.
