@@ -6,11 +6,11 @@
 
 # see README.md before changing settings below
 
-subsonic_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-music="$subsonic_dir"/music
-playlists="$subsonic_dir"/playlists
-podcasts="$subsonic_dir"/podcasts
-data="$subsonic_dir"/data
+subsonic_dir="$(pwd)"
+music="$subsonic_dir/music"
+playlists="$subsonic_dir/playlists"
+podcasts="$subsonic_dir/podcasts"
+data="$subsonic_dir/data"
 
 mem="250"
 port=4040
