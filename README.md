@@ -9,7 +9,7 @@ Thanks to Sindre Mehus at [subsonic.org](http://www.subsonic.org/pages/index.jsp
 After cloning or downloading this repository, `cd` to it and follow the instructions below.
 
 ### `build`
-If you don't have Docker, install it per your OS instructions, then run:
+If you don't have Docker, install it per your OS instructions, add yourself to the `docker` group so that `sudo` is not required to use Docker, then run:
 ```
 ./build
 ```
@@ -41,7 +41,10 @@ Started Subsonic [PID 59, /var/subsonic/subsonic_sh.log]
 ```
 In the log output note the `--host=<ip>`, `--port=<port>`, and `--context-path=<path>` settings and browse to `<ip>:<port><context-path>`. For example, browse to `10.0.1.15:4040/`
 
-Subsonic should be up and running!  It will automatically restart when the system reboots.
+Subsonic should be up and running!  To have it automatically restart when the system reboots, you need to enable Docker to [start on boot](https://docs.docker.com/install/linux/linux-postinstall//#configure-docker-to-start-on-boot#configure-docker-to-start-on-boot).  In Ubuntu, do:
+```
+sudo systemctl enable docker
+```
 
 ### `stop`
 To stop Subsonic, run:
