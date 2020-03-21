@@ -25,7 +25,7 @@ COPY ./subsonic-*.deb .
 RUN apt-get install ./subsonic-*.deb
 RUN rm ./subsonic-*.deb
 # save configuration files for first time intialization
-RUN cp -r /var/subsonic .
+RUN cp -a /var/subsonic .
 
 COPY ./run .
 RUN chmod +x ./run

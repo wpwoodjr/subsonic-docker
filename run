@@ -42,6 +42,11 @@ then
     cp -a subsonic/. /var/subsonic/
     chown -R "$SUBSONIC_USER:" /var/subsonic
     ls -lat /var/subsonic
+  else
+    echo -e "\nupdating transcode files"
+    cp -a subsonic/transcode/. /var/subsonic/transcode
+    chown -R "$SUBSONIC_USER:" /var/subsonic/transcode
+    ls -lat /var/subsonic/transcode
   fi
   rm -r subsonic
 fi
