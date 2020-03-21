@@ -41,7 +41,7 @@ Started Subsonic [PID 59, /var/subsonic/subsonic_sh.log]
 ```
 In the log output note the `--host=<ip>`, `--port=<port>`, and `--context-path=<path>` settings and browse to `<ip>:<port><context-path>`. For example, browse to `10.0.1.15:4040/`
 
-Subsonic should be up and running!  To have it automatically restart when the system reboots, you need to enable Docker to [start on boot](https://docs.docker.com/install/linux/linux-postinstall//#configure-docker-to-start-on-boot#configure-docker-to-start-on-boot).  In Ubuntu, do:
+Subsonic should be up and running!  To have it automatically restart when the system reboots, you need to enable Docker to [start on boot](https://docs.docker.com/install/linux/linux-postinstall/#configure-docker-to-start-on-boot).  In Ubuntu, do:
 ```
 sudo systemctl enable docker
 ```
