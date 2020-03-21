@@ -53,13 +53,15 @@ fi
 
 if [ "$HOSTIP" = "" ]
 then
-  echo -e "\ngetting host ip"
-  #HOSTIP=$(hostname -I|awk '{ print $1 }')
   # https://unix.stackexchange.com/a/402160/338467
   HOSTIP=$(ip route get 8.8.8.8 || echo "0.0.0.0")
-  [ "$HOSTIP" = "0.0.0.0" ] || \
+  if [ "$HOSTIP" = "0.0.0.0" ]
+  then
+    echo -e "\nfailed to get host ip, using 0.0.0.0 - Sonos may not work"
+  else
     HOSTIP=$(awk <<<$HOSTIP '{gsub(".*src",""); print $1; exit}')
-  [ "$HOSTIP" = "0.0.0.0" ] && echo "failed to get host ip - Sonos may not work"
+    echo -e "\ngot host ip $HOSTIP"
+  fi
 fi
 
 SUBSONIC_ARGS="$SUBSONIC_ARGS --host=$HOSTIP"
