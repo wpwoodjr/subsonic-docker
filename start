@@ -17,6 +17,7 @@ docker run -d \
   --name subsonic \
   --restart always \
   -v $music:/var/music \
+  -v $videos:/var/videos \
   -v $playlists:/var/playlists \
   -v $podcasts:/var/music/Podcast \
   -v $data:/var/subsonic \

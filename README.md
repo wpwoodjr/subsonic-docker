@@ -33,15 +33,15 @@ Generation complete.
 setting timezone to America/New_York
 creating user subsonic with uid 1000
 
-getting host ip
+got host ip 10.0.1.15
 
 starting Subsonic with args  --port=4040 --https-port=0 --context-path=/ --max-memory=250 --host=10.0.1.15
 Started Subsonic [PID 59, /var/subsonic/subsonic_sh.log]
    59 ?        R      0:00 java -Xmx250m -Dsubsonic.home=/var/subsonic -Dsubsonic.host=10.0.1.15 -Dsubsonic.port=4040 -Dsubsonic.httpsPort=0 -Dsubsonic.contextPath=/ -Dsubsonic.db= -Dsubsonic.defaultMusicFolder=/var/music -Dsubsonic.defaultPodcastFolder=/var/music/Podcast -Dsubsonic.defaultPlaylistFolder=/var/playlists -Djava.awt.headless=true -verbose:gc -jar subsonic-booter-jar-with-dependencies.jar
 ```
-In the log output note the `--host=<ip>`, `--port=<port>`, and `--context-path=<path>` settings and browse to `<ip>:<port><context-path>`. For example, browse to `10.0.1.15:4040/`
+Subsonic should be up and running!  To go to its browser interface, note the `--host=<ip>`, `--port=<port>`, and `--context-path=<path>` settings in the log output, and browse to `<ip>:<port><context-path>`. For example, browse to `10.0.1.15:4040/`
 
-Subsonic should be up and running!  To have it automatically restart when the system reboots, you need to enable Docker to [start on boot](https://docs.docker.com/install/linux/linux-postinstall/#configure-docker-to-start-on-boot).  In Ubuntu, do:
+To have Subsonic automatically restart when the system reboots, you need to enable Docker to [start on boot](https://docs.docker.com/install/linux/linux-postinstall/#configure-docker-to-start-on-boot).  In Ubuntu, do:
 ```
 sudo systemctl enable docker
 ```
@@ -67,6 +67,17 @@ Defaults to `music` in `subsonic_dir`.  You can change `music` to point directly
 ln -s /your-music/ music
 ```
 If you don't change `music`, a new directory called `music` will be created in `subsonic_dir`.
+
+#### `videos`
+Directory containing your video files.
+
+Defaults to `videos` in `subsonic_dir`.  You can change `videos` to point directly to your videos directory, or alternatively you can create a symbolic link in `subsonic_dir` from `videos` to your videos directory:
+```
+ln -s /your-videos/ videos
+```
+If you don't change `videos`, a new directory called `videos` will be created in `subsonic_dir`.
+
+**Note:** Unlike the `music` folder, the `videos` folder is not automatically added for you in Subsonic.  In the Subsonic browser interface, go to `Settings...Media Folders` and add it as a media folder with name `Videos` in folder `/var/videos`.
 
 #### `playlists`
 Directory containing your playlist files.

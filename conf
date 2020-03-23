@@ -8,6 +8,7 @@
 
 subsonic_dir="$(pwd)"
 music="$subsonic_dir/music"
+videos="$subsonic_dir/videos"
 playlists="$subsonic_dir/playlists"
 podcasts="$subsonic_dir/podcasts"
 data="$subsonic_dir/data"
