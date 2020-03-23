@@ -23,7 +23,9 @@ After configuring settings (see `conf` section below), run:
 to start Subsonic.  You will see some log output similar to:
 ```
 $ ./start
-039bc7477e2acb84bbbe5eb048bc24250c4c545102582e1ac47f74d93a802198
+416bb53f3c6e39f0641e2f9f7099d892e6ab637290c3cb89119a2207a81d71dd
+
+Starting Subsonic on Mon Mar 23 09:49:30 EDT 2020
 
 initializing container
 setting locale to en_US.UTF-8
@@ -33,11 +35,15 @@ Generation complete.
 setting timezone to America/New_York
 creating user subsonic with uid 1000
 
-got host ip 10.0.1.15
+updating transcode files
+total 105068
+-rwxr-xr-x 1 subsonic subsonic 74711976 Mar  5 18:28 ffmpeg-03052020
+-rwxr-xr-x 1 subsonic subsonic 32495668 Nov 10 13:32 ffmpeg
+-rwxr-xr-x 1 subsonic subsonic   372787 Nov 10 13:32 lame
 
-starting Subsonic with args  --port=4040 --https-port=0 --context-path=/ --max-memory=250 --host=10.0.1.15
-Started Subsonic [PID 59, /var/subsonic/subsonic_sh.log]
-   59 ?        R      0:00 java -Xmx250m -Dsubsonic.home=/var/subsonic -Dsubsonic.host=10.0.1.15 -Dsubsonic.port=4040 -Dsubsonic.httpsPort=0 -Dsubsonic.contextPath=/ -Dsubsonic.db= -Dsubsonic.defaultMusicFolder=/var/music -Dsubsonic.defaultPodcastFolder=/var/music/Podcast -Dsubsonic.defaultPlaylistFolder=/var/playlists -Djava.awt.headless=true -verbose:gc -jar subsonic-booter-jar-with-dependencies.jar
+starting Subsonic with args --host=10.0.1.200  --port=14545 --https-port=0 --context-path=/subsonic --max-memory=250
+Started Subsonic [PID 66, /var/subsonic/subsonic_sh.log]
+   66 ?        R      0:00 java -Xmx250m -Dsubsonic.home=/var/subsonic -Dsubsonic.host=10.0.1.200 -Dsubsonic.port=14545 -Dsubsonic.httpsPort=0 -Dsubsonic.contextPath=/subsonic -Dsubsonic.db= -Dsubsonic.defaultMusicFolder=/var/music -Dsubsonic.defaultPodcastFolder=/var/music/Podcast -Dsubsonic.defaultPlaylistFolder=/var/playlists -Djava.awt.headless=true -verbose:gc -jar subsonic-booter-jar-with-dependencies.jar
 ```
 Subsonic should be up and running!  To go to its browser interface, note the `--host=<ip>`, `--port=<port>`, and `--context-path=<path>` settings in the log output, and browse to `<ip>:<port><context-path>`. For example, browse to `10.0.1.15:4040/`
 

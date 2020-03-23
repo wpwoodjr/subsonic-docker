@@ -17,6 +17,7 @@ fi
 
 if [ ! -f init-complete ]
 then
+  echo -e "\nStarting Subsonic on $(date)"
   touch init-complete
 
   echo -e "\ninitializing container"
@@ -49,6 +50,8 @@ then
     ls -lAt /var/subsonic/transcode
   fi
   rm -r subsonic
+else
+  echo -e "\n\nRestarting Subsonic on $(date)"
 fi
 
 if [ "$HOSTIP" = "" ]
@@ -60,15 +63,13 @@ then
     echo -e "\nfailed to get host ip, using 0.0.0.0 - Sonos may not work"
   else
     HOSTIP=$(awk <<<$HOSTIP '{gsub(".*src",""); print $1; exit}')
-    echo -e "\ngot host ip $HOSTIP"
   fi
 fi
 
-SUBSONIC_ARGS="$SUBSONIC_ARGS --host=$HOSTIP"
-sed -i -e "s^SUBSONIC_ARGS=\"\(.*\)\"^SUBSONIC_ARGS=\"\1 $SUBSONIC_ARGS\"^g" \
+sed -i -e "s^SUBSONIC_ARGS=\"\(.*\)\"^SUBSONIC_ARGS=\"\1 --host=$HOSTIP $SUBSONIC_ARGS\"^g" \
   /etc/default/subsonic
 
-echo -e "\nstarting Subsonic with args $SUBSONIC_ARGS"
+echo -e "\nstarting Subsonic with args --host=$HOSTIP $SUBSONIC_ARGS"
 service subsonic start
 ps -ax | grep '[j]ava'
 
