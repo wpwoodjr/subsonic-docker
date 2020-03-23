@@ -41,9 +41,9 @@ total 105068
 -rwxr-xr-x 1 subsonic subsonic 32495668 Nov 10 13:32 ffmpeg
 -rwxr-xr-x 1 subsonic subsonic   372787 Nov 10 13:32 lame
 
-starting Subsonic with args --host=10.0.1.200  --port=14545 --https-port=0 --context-path=/subsonic --max-memory=250
+starting Subsonic with args --host=10.0.1.15  --port=4040 --https-port=0 --context-path=/ --max-memory=250
 Started Subsonic [PID 66, /var/subsonic/subsonic_sh.log]
-   66 ?        R      0:00 java -Xmx250m -Dsubsonic.home=/var/subsonic -Dsubsonic.host=10.0.1.200 -Dsubsonic.port=14545 -Dsubsonic.httpsPort=0 -Dsubsonic.contextPath=/subsonic -Dsubsonic.db= -Dsubsonic.defaultMusicFolder=/var/music -Dsubsonic.defaultPodcastFolder=/var/music/Podcast -Dsubsonic.defaultPlaylistFolder=/var/playlists -Djava.awt.headless=true -verbose:gc -jar subsonic-booter-jar-with-dependencies.jar
+   66 ?        R      0:00 java -Xmx250m -Dsubsonic.home=/var/subsonic -Dsubsonic.host=10.0.1.15 -Dsubsonic.port=4040 -Dsubsonic.httpsPort=0 -Dsubsonic.contextPath=/ -Dsubsonic.db= -Dsubsonic.defaultMusicFolder=/var/music -Dsubsonic.defaultPodcastFolder=/var/music/Podcast -Dsubsonic.defaultPlaylistFolder=/var/playlists -Djava.awt.headless=true -verbose:gc -jar subsonic-booter-jar-with-dependencies.jar
 ```
 Subsonic should be up and running!  To go to its browser interface, note the `--host=<ip>`, `--port=<port>`, and `--context-path=<path>` settings in the log output, and browse to `<ip>:<port><context-path>`. For example, browse to `10.0.1.15:4040/`
 
