@@ -37,7 +37,6 @@ creating user subsonic with uid 1000
 
 updating transcode files
 total 105068
--rwxr-xr-x 1 subsonic subsonic 74711976 Mar  5 18:28 ffmpeg-03052020
 -rwxr-xr-x 1 subsonic subsonic 32495668 Nov 10 13:32 ffmpeg
 -rwxr-xr-x 1 subsonic subsonic   372787 Nov 10 13:32 lame
 
