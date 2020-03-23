@@ -17,17 +17,18 @@ fi
 
 if [ ! -f init-complete ]
 then
-  echo -e "\nStarting Subsonic on $(date)"
   touch init-complete
 
+  unlink /etc/localtime
+  ln -s /usr/share/zoneinfo/"$TZ" /etc/localtime
+
+  echo -e "\nStarting Subsonic on $(date)"
   echo -e "\ninitializing container"
+  echo "setting timezone to $TZ"
+
   echo "setting locale to $LOCALE"
   locale-gen "$LOCALE"
   update-locale LANG="$LOCALE"
-
-  echo "setting timezone to $TZ"
-  unlink /etc/localtime
-  ln -s /usr/share/zoneinfo/"$TZ" /etc/localtime
 
   if [ "$SUBSONIC_USER" != "root" ]
   then
