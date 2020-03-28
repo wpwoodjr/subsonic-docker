@@ -22,6 +22,6 @@ context_path="/"
 locale="en_US.UTF-8"
 tz="America/New_York"
 user="subsonic"
-uid="1000"
+uid="$UID"
 
 args=""
