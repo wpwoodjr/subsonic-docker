@@ -8,10 +8,10 @@ set -e
 source ./conf
 [ -f "./myconf" ] && source ./myconf
 
-[ -d "$music" ] || mkdir "$music"
-[ -d "$playlists" ] || mkdir "$playlists"
-[ -d "$podcasts" ] || mkdir "$podcasts"
-[ -d "$data" ] || mkdir "$data"
+[ -d "$music" ] || mkdir -pv "$music"
+[ -d "$playlists" ] || mkdir -pv "$playlists"
+[ -d "$podcasts" ] || mkdir -pv "$podcasts"
+[ -d "$data" ] || mkdir -pv "$data"
 
 docker run -d \
   --name subsonic \
