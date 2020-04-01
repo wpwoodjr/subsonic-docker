@@ -139,7 +139,7 @@ See https://www.tecmint.com/set-system-locales-in-linux/ for more info.
 #### `tz`
 Default time zone is `America/New_York`.  Set this to your time zone so that Subsonic's scheduled time for "Scan media folders" reflects your time zone.
 
-See https://linuxize.com/post/how-to-set-or-change-timezone-in-linux/ for more info.
+See https://linuxize.com/post/how-to-set-or-change-timezone-in-linux/ and https://en.wikipedia.org/wiki/List_of_tz_database_time_zones for more info.
 
 #### `user` and `uid`
 By default Subsonic runs in the container under the user `subsonic` with uid `1000`.
