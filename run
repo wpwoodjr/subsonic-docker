@@ -73,6 +73,7 @@ sed -i -e "s^SUBSONIC_ARGS=\"\(.*\)\"^SUBSONIC_ARGS=\"\1 --host=$HOSTIP $SUBSONI
 echo -e "\nstarting Subsonic with args --host=$HOSTIP $SUBSONIC_ARGS"
 service subsonic start
 ps -ax | grep '[j]ava'
+echo -e "\nSubsonic started"
 
 # don't exit otherwise container will stop
 tail -f /dev/null

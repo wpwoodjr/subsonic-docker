@@ -5,13 +5,18 @@
 # run ./stop to stop Subsonic
 
 # see README.md before changing settings below
+# configure media directories, using full path names
+# rename these if you need to match a current Subsonic setup
+media_folders=(music music2 videos)
+music=""
+music2=""
+videos=""
 
-subsonic_dir="$(pwd)"
-music="$subsonic_dir/music"
-videos="$subsonic_dir/videos"
-playlists="$subsonic_dir/playlists"
-podcasts="$subsonic_dir/podcasts"
-data="$subsonic_dir/data"
+playlists="$(pwd)/playlists"
+podcasts="$(pwd)/podcasts"
+
+# location of Subsonic database
+database="$(pwd)/database"
 
 mem="250"
 port=4040

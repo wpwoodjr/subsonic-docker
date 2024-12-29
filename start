@@ -8,19 +8,29 @@ set -e
 source ./conf
 [ -f "./myconf" ] && source ./myconf
 
-[ -d "$music" ] || mkdir -pv "$music"
-[ -d "$playlists" ] || mkdir -pv "$playlists"
-[ -d "$podcasts" ] || mkdir -pv "$podcasts"
-[ -d "$data" ] || mkdir -pv "$data"
+media_vols=()
+for m in "${media_folders[@]}"
+do
+  dir="${!m}"
+  [ -d "$dir" ] && media_vols+=(-v "$dir:/var/$m")
+done
+[ "$media_vols" = "" ] && echo "No media directories, please edit conf file" && exit 1
 
+playlists=${playlists:-"playlists"}
+[ -d "$playlists" ] || mkdir -pv "$playlists"
+podcasts=${podcasts:-"podcasts"}
+[ -d "$podcasts" ] || mkdir -pv "$podcasts"
+database=${database:-"database"}
+[ -d "$database" ] || mkdir -pv "$database"
+
+set -x
 docker run -d \
   --name subsonic \
   --restart always \
-  -v "$music:/var/music" \
-  -v "$videos:/var/videos" \
+  "${media_vols[@]}" \
   -v "$playlists:/var/playlists" \
   -v "$podcasts:/var/music/Podcast" \
-  -v "$data:/var/subsonic" \
+  -v "$database:/var/subsonic" \
   --network host \
   --env PORT="$port" \
   --env HOSTIP="$hostip" \
@@ -30,6 +40,16 @@ docker run -d \
   --env UID="$uid" \
   --env SUBSONIC_ARGS="$args --port=$port --https-port=$https_port --context-path=$context_path --max-memory=$mem" \
   subsonic ./run start
+set +x
 
-sleep 5
-docker logs subsonic
+# https://unix.stackexchange.com/a/470629/338467
+wait() {
+  local LOGLINE
+  while IFS= read -r LOGLINE || [[ -n "$LOGLINE" ]]; do
+    printf '%s\n' "$LOGLINE"
+    [[ "${LOGLINE}" == "$2" ]] && return 0
+  done < <(timeout "$1" $3)
+  return 0
+}
+
+wait 30 "Subsonic started" "docker logs -f subsonic"
