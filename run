@@ -44,11 +44,6 @@ then
     cp -a subsonic/. /var/subsonic/
     chown -R "$SUBSONIC_USER:" /var/subsonic
     ls -lat /var/subsonic
-  else
-    echo -e "\nupdating transcode files"
-    cp -au subsonic/transcode/. /var/subsonic/transcode
-    chown -R "$SUBSONIC_USER:" /var/subsonic/transcode
-    ls -lAt /var/subsonic/transcode
   fi
   rm -r subsonic
 else
@@ -61,7 +56,7 @@ then
   HOSTIP=$(ip route get 8.8.8.8 || echo "0.0.0.0")
   if [ "$HOSTIP" = "0.0.0.0" ]
   then
-    echo -e "\nfailed to get host ip, using 0.0.0.0 - Sonos may not work"
+    echo -e "\n*** Failed to get host ip, using 0.0.0.0 - Sonos may not work ***"
   else
     HOSTIP=$(awk <<<$HOSTIP '{gsub(".*src",""); print $1; exit}')
   fi
@@ -73,7 +68,7 @@ sed -i -e "s^SUBSONIC_ARGS=\"\(.*\)\"^SUBSONIC_ARGS=\"\1 --host=$HOSTIP $SUBSONI
 echo -e "\nstarting Subsonic with args --host=$HOSTIP $SUBSONIC_ARGS"
 service subsonic start
 ps -ax | grep '[j]ava'
-echo -e "\nSubsonic started"
+echo -e "\nSubsonic started; configure it at http://$HOSTIP:$PORT$CONTEXT_PATH"
 
 # don't exit otherwise container will stop
 tail -f /dev/null

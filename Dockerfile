@@ -17,15 +17,20 @@ RUN apt-get update \
     locales \
     tzdata \
     iproute2 \
-    openjdk-8-jre-headless
+    openjdk-8-jre-headless \
+    ffmpeg \
+    lame
 
 # install Subsonic
 WORKDIR /var/subsonic-docker
 COPY ./subsonic-*.deb .
-RUN apt-get install ./subsonic-*.deb
-RUN rm ./subsonic-*.deb
-# save configuration files for first time intialization
-RUN cp -a /var/subsonic .
+RUN apt-get install ./subsonic-*.deb \
+ && rm ./subsonic-*.deb
+
+ # save configuration files to copy back over to /var/subsonic volume mount during first time initialization
+RUN ln -sf /usr/bin/ffmpeg /var/subsonic/transcode/ffmpeg \
+ && ln -sf /usr/bin/lame /var/subsonic/transcode/lame \
+ && cp -a /var/subsonic .
 
 COPY ./run .
 RUN chmod +x ./run

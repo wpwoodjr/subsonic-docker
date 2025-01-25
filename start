@@ -12,9 +12,10 @@ media_vols=()
 for m in "${media_folders[@]}"
 do
   dir="${!m}"
-  [ -d "$dir" ] && media_vols+=(-v "$dir:/var/$m")
+  [ ! -d "$dir" ] && echo "$dir doesn't exist, please check conf file" && exit 1
+  media_vols+=(-v "$dir:/var/$m")
 done
-[ "$media_vols" = "" ] && echo "No media directories, please edit conf file" && exit 1
+[ "$media_vols" = "" ] && echo "No media directories, please check conf file" && exit 1
 
 playlists=${playlists:-"playlists"}
 [ -d "$playlists" ] || mkdir -pv "$playlists"
@@ -26,7 +27,7 @@ database=${database:-"database"}
 set -x
 docker run -d \
   --name subsonic \
-  --restart always \
+  --restart unless-stopped \
   "${media_vols[@]}" \
   -v "$playlists:/var/playlists" \
   -v "$podcasts:/var/music/Podcast" \
@@ -34,6 +35,7 @@ docker run -d \
   --network host \
   --env PORT="$port" \
   --env HOSTIP="$hostip" \
+  --env CONTEXT_PATH="$context_path" \
   --env LOCALE="$locale" \
   --env TZ="$tz" \
   --env SUBSONIC_USER="$user" \
@@ -47,9 +49,12 @@ wait() {
   local LOGLINE
   while IFS= read -r LOGLINE || [[ -n "$LOGLINE" ]]; do
     printf '%s\n' "$LOGLINE"
-    [[ "${LOGLINE}" == "$2" ]] && return 0
-  done < <(timeout "$1" $3)
-  return 0
+    [[ "$LOGLINE" == "$2"* ]] && return 0
+  done < <(timeout "$1" $3 2>/dev/null)
+  return 1
 }
 
-wait 30 "Subsonic started" "docker logs -f subsonic"
+if ! wait 30 "Subsonic started" "docker logs -f subsonic"
+then
+  echo -e "\n*** Error starting Subsonic! ***"
+fi
