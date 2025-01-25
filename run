@@ -22,13 +22,16 @@ then
   unlink /etc/localtime
   ln -s /usr/share/zoneinfo/"$TZ" /etc/localtime
 
-  echo -e "\nStarting Subsonic on $(date)"
+  echo -e "\n*** Starting Subsonic on $(date) ***"
   echo -e "\ninitializing container"
   echo "setting timezone to $TZ"
 
   echo "setting locale to $LOCALE"
   locale-gen "$LOCALE"
   update-locale LANG="$LOCALE"
+
+  # save original args
+  grep "^SUBSONIC_ARGS=" "/etc/default/subsonic" | sed -e 's/SUBSONIC_ARGS/SUBSONIC_ARGS_ORIGINAL/' >subsonic_args_original
 
   if [ "$SUBSONIC_USER" != "root" ]
   then
@@ -47,7 +50,7 @@ then
   fi
   rm -r subsonic
 else
-  echo -e "\n\nRestarting Subsonic on $(date)"
+  echo -e "\n\n*** Restarting Subsonic on $(date) ***"
 fi
 
 if [ "$HOSTIP" = "" ]
@@ -62,7 +65,8 @@ then
   fi
 fi
 
-sed -i -e "s^SUBSONIC_ARGS=\"\(.*\)\"^SUBSONIC_ARGS=\"\1 --host=$HOSTIP $SUBSONIC_ARGS\"^g" \
+source subsonic_args_original
+sed -i -e "s?^SUBSONIC_ARGS=.*?SUBSONIC_ARGS=\"$SUBSONIC_ARGS_ORIGINAL --host=$HOSTIP $SUBSONIC_ARGS\"?" \
   /etc/default/subsonic
 
 echo -e "\nstarting Subsonic with args --host=$HOSTIP $SUBSONIC_ARGS"
