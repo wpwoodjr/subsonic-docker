@@ -5,8 +5,9 @@
 # run ./stop to stop Subsonic (this file)
 
 echo "stopping Subsonic"
-docker exec subsonic ./run stop
+docker container stop subsonic >/dev/null
+
+[ "$1" = "--noremove" ] && exit 0
 echo "removing subsonic container"
-docker container stop -t 2 subsonic >/dev/null
 docker container rm subsonic >/dev/null
 echo "run ./start to restart Subsonic"

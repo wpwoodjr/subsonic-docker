@@ -1,0 +1,10 @@
+#!/bin/bash
+# first run ./build to build the Subsonic Docker container
+# then configure Subsonic by editing ./conf
+# then run ./start to start Subsonic
+# run ./stop to stop Subsonic
+# run ./restart to restart Subsonic (this file)
+
+echo "restarting Subsonic"
+docker container stop subsonic >/dev/null
+docker container start subsonic >/dev/null

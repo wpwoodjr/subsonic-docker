@@ -2,22 +2,23 @@
 # this script is run inside the Docker container
 # you should not need to run it
 
-set -e
-if [ "$1" = "stop" ]
-then
+_term() {
   service subsonic stop
-  exit
-fi
+  echo -e "\n\n*** Subsonic stopped by docker on $(date) ***"
+  exit 0
+}
+trap _term SIGTERM
 
+set -e
 if [ "$1" != "start" ]
 then
-  echo "do not run this outside of the container!"
+  echo "Command $1 not recognized; do not run this outside of the container!"
   exit 1
 fi
 
-if [ ! -f init-complete ]
+if [ ! -f "init-complete" ]
 then
-  touch init-complete
+  touch "init-complete"
 
   unlink /etc/localtime
   ln -s /usr/share/zoneinfo/"$TZ" /etc/localtime
@@ -74,5 +75,9 @@ service subsonic start
 ps -ax | grep '[j]ava'
 echo -e "\nSubsonic started; configure it at http://$HOSTIP:$PORT$CONTEXT_PATH"
 
-# don't exit otherwise container will stop
-tail -f /dev/null
+# wait for Subsonic to stop before exiting (which stops container)
+# allow SIGTERM to be handled https://stackoverflow.com/a/76046235
+tail --pid "$(cat /var/run/subsonic.pid)" -f /dev/null & wait $!
+echo -e "\n\n*** Subsonic exited unexpectedly on $(date) ***"
+# don't restart docker container right away
+sleep 10
