@@ -30,6 +30,7 @@ then
   echo "setting locale to $LOCALE"
   locale-gen "$LOCALE"
   update-locale LANG="$LOCALE"
+  export LANG="$LOCALE"
 
   # save original args
   grep "^SUBSONIC_ARGS=" "/etc/default/subsonic" | sed -e 's/SUBSONIC_ARGS/SUBSONIC_ARGS_ORIGINAL/' >subsonic_args_original
